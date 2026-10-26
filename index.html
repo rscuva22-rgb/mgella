@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Morning Glow Ella - Reservation Manager</title>
+  <title>Morning Glow Ella - Operations & Bookings</title>
   
-  <!-- Mobile PWA Meta Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Morning Glow" />
@@ -21,9 +20,7 @@
       --text-muted: #64748b;
       --primary: #0284c7;
       --primary-dark: #0369a1;
-      --primary-light: #e0f2fe;
 
-      /* Channel Colors */
       --ch-booking: #1d4ed8;
       --ch-airbnb: #e11d48;
       --ch-phone: #0891b2;
@@ -48,11 +45,11 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Navigation Bar */
+    /* Top App Header */
     .app-header {
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(8px);
       z-index: 40;
       border-bottom: 1px solid var(--border);
@@ -63,7 +60,7 @@
     }
 
     .brand-title {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: #0f172a;
       display: flex;
@@ -83,234 +80,189 @@
     }
 
     .icon-btn {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: 1px solid var(--border);
       background: #fff;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       color: var(--text);
     }
-
     .icon-btn:active {
-      transform: scale(0.92);
       background: #f1f5f9;
+      transform: scale(0.92);
     }
 
-    /* Top Stats Metrics */
-    .stats-scroll {
+    /* Quick Date Switcher Bar */
+    .date-indicator-bar {
       display: flex;
-      gap: 0.75rem;
-      padding: 1rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .stats-scroll::-webkit-scrollbar { display: none; }
-
-    .stat-chip {
-      flex: 0 0 auto;
-      background: #fff;
-      border: 1px solid var(--border);
+      justify-content: space-between;
+      align-items: center;
       padding: 0.75rem 1rem;
-      border-radius: 0.85rem;
-      min-width: 125px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-    }
-
-    .stat-chip-label {
-      font-size: 0.68rem;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
       font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
     }
 
-    .stat-chip-num {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin-top: 0.15rem;
-    }
-
-    /* Channel Badges */
-    .filter-pills {
-      display: flex;
-      gap: 0.4rem;
-      padding: 0 1rem 0.75rem 1rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .filter-pills::-webkit-scrollbar { display: none; }
-
-    .pill {
+    .live-clock {
       font-size: 0.75rem;
       font-weight: 600;
-      padding: 0.35rem 0.75rem;
-      border-radius: 2rem;
+      color: var(--primary);
+      background: #e0f2fe;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    /* Content Area */
+    .view-content {
+      padding: 1rem;
+    }
+
+    /* Section Headers */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Room Prep Summary Card */
+    .room-prep-card {
       background: #fff;
+      border-radius: 0.85rem;
       border: 1px solid var(--border);
-      white-space: nowrap;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.65rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      position: relative;
+    }
+
+    .room-prep-card.border-checkin { border-left: 5px solid #16a34a; }
+    .room-prep-card.border-checkout { border-left: 5px solid #dc2626; }
+    .room-prep-card.border-staying { border-left: 5px solid #0284c7; }
+    .room-prep-card.border-vacant { border-left: 5px solid #cbd5e1; opacity: 0.75; }
+
+    .room-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .room-name-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .status-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+    .badge-checkin { background: #dcfce7; color: #15803d; }
+    .badge-checkout { background: #fee2e2; color: #991b1b; }
+    .badge-staying { background: #e0f2fe; color: #0369a1; }
+    .badge-vacant { background: #f1f5f9; color: #64748b; }
+
+    .guest-line {
+      font-size: 0.85rem;
+      color: #334155;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Food & Prep Box */
+    .food-box {
+      background: #fffbeb;
+      border: 1px dashed #fcd34d;
+      border-radius: 0.5rem;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.78rem;
+      color: #92400e;
+      margin-top: 0.45rem;
       display: flex;
       align-items: center;
       gap: 0.35rem;
     }
 
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    .view-content {
-      padding: 0 1rem;
-    }
-
-    /* Agenda Day Sections */
-    .agenda-day-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .agenda-date-header {
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    /* Booking Item Cards */
-    .booking-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 0.85rem;
-      padding: 0.9rem 1rem;
-      margin-bottom: 0.65rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .booking-card:active {
-      background: #f8fafc;
-    }
-
-    .booking-card-strip {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 5px;
-    }
-
-    .booking-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.35rem;
-    }
-
-    .guest-name {
-      font-weight: 700;
-      font-size: 0.98rem;
-      color: #0f172a;
-    }
-
-    .room-badge {
-      font-size: 0.72rem;
-      font-weight: 600;
-      background: #f1f5f9;
-      color: #334155;
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.4rem;
-    }
-
-    .booking-dates {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .booking-foot {
+    .card-actions-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.75rem;
-      border-top: 1px dashed var(--border);
+      margin-top: 0.5rem;
       padding-top: 0.45rem;
-      margin-top: 0.45rem;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.75rem;
     }
 
-    .channel-tag {
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .quick-actions {
-      display: flex;
-      gap: 0.4rem;
-    }
-
-    .action-chip {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      padding: 0.25rem 0.55rem;
-      border-radius: 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--primary);
+    .btn-action-small {
       text-decoration: none;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 0.4rem;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--primary);
       display: inline-flex;
       align-items: center;
       gap: 0.2rem;
     }
 
-    /* Timeline Grid */
+    /* Channel dots */
+    .ch-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+    }
+    .bg-booking { background-color: var(--ch-booking); }
+    .bg-airbnb { background-color: var(--ch-airbnb); }
+    .bg-phone { background-color: var(--ch-phone); }
+    .bg-visiting { background-color: var(--ch-visiting); }
+
+    /* Timeline Table View */
     .timeline-card {
       background: #fff;
-      border-radius: 1rem;
+      border-radius: 0.85rem;
       border: 1px solid var(--border);
       overflow: hidden;
-      margin-bottom: 1.5rem;
+      margin-top: 0.5rem;
     }
-
-    .timeline-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-
     .timeline-scroll-wrap {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
-
     .m-table {
       width: 100%;
       border-collapse: collapse;
       min-width: 800px;
     }
-
     .m-table th, .m-table td {
       border: 1px solid var(--border);
       text-align: center;
       font-size: 0.75rem;
       height: 48px;
     }
-
     .m-table th {
       background: #f8fafc;
       font-weight: 600;
@@ -318,7 +270,6 @@
       min-width: 32px;
       height: 34px;
     }
-
     .m-table .sticky-room {
       position: sticky;
       left: 0;
@@ -330,9 +281,7 @@
       min-width: 140px;
       z-index: 2;
       border-right: 2px solid var(--border);
-      box-shadow: 2px 0 4px rgba(0,0,0,0.02);
     }
-
     .timeline-bar {
       height: 38px;
       border-radius: 6px;
@@ -347,13 +296,7 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
     }
-
-    .bg-booking { background-color: var(--ch-booking); color: #fff; }
-    .bg-airbnb { background-color: var(--ch-airbnb); color: #fff; }
-    .bg-phone { background-color: var(--ch-phone); color: #fff; }
-    .bg-visiting { background-color: var(--ch-visiting); color: #fff; }
 
     /* Bottom Navigation */
     .bottom-nav {
@@ -371,7 +314,6 @@
       z-index: 50;
       box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
     }
-
     .nav-item {
       display: flex;
       flex-direction: column;
@@ -381,25 +323,19 @@
       font-size: 0.68rem;
       font-weight: 600;
       gap: 0.2rem;
-      width: 25%;
+      width: 33%;
       cursor: pointer;
     }
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { font-size: 1.25rem; }
 
-    .nav-item.active {
-      color: var(--primary);
-    }
-
-    .nav-icon {
-      font-size: 1.25rem;
-    }
-
-    /* Floating Action Button */
+    /* Floating Add Button */
     .fab {
       position: fixed;
       bottom: calc(75px + var(--safe-bottom));
       right: 1.25rem;
-      width: 56px;
-      height: 56px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       background: var(--primary);
       color: #fff;
@@ -411,14 +347,10 @@
       cursor: pointer;
       z-index: 45;
       border: none;
-      transition: transform 0.15s ease;
     }
+    .fab:active { transform: scale(0.92); }
 
-    .fab:active {
-      transform: scale(0.92);
-    }
-
-    /* Bottom Sheet Modal */
+    /* Modal Sheet */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -429,7 +361,6 @@
       align-items: flex-end;
       justify-content: center;
     }
-
     .sheet-modal {
       background: #fff;
       width: 100%;
@@ -438,14 +369,12 @@
       padding: 1.25rem 1.25rem calc(1.5rem + var(--safe-bottom)) 1.25rem;
       max-height: 90vh;
       overflow-y: auto;
-      animation: slideUp 0.22s ease-out;
+      animation: slideUp 0.2s ease-out;
     }
-
     @keyframes slideUp {
       from { transform: translateY(100%); }
       to { transform: translateY(0); }
     }
-
     .sheet-handle {
       width: 40px;
       height: 4px;
@@ -453,23 +382,13 @@
       border-radius: 2px;
       margin: 0 auto 1rem auto;
     }
-
     .sheet-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
     }
-
-    .sheet-head h3 {
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-
-    .form-group {
-      margin-bottom: 0.9rem;
-    }
-
+    .form-group { margin-bottom: 0.85rem; }
     .form-group label {
       display: block;
       font-size: 0.78rem;
@@ -477,7 +396,6 @@
       color: #334155;
       margin-bottom: 0.3rem;
     }
-
     .form-group input, .form-group select, .form-group textarea {
       width: 100%;
       padding: 0.75rem 0.85rem;
@@ -487,24 +405,12 @@
       outline: none;
       background: #f8fafc;
     }
-
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       border-color: var(--primary);
       background: #fff;
     }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
-
-    .sheet-actions {
-      display: flex;
-      gap: 0.6rem;
-      margin-top: 1.2rem;
-    }
-
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .sheet-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
     .btn {
       flex: 1;
       padding: 0.85rem;
@@ -515,18 +421,10 @@
       cursor: pointer;
       text-align: center;
     }
+    .btn-save { background: var(--primary); color: #fff; }
+    .btn-del { background: #fee2e2; color: #b91c1c; flex: 0 0 70px; }
 
-    .btn-save {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .btn-del {
-      background: #fee2e2;
-      color: #b91c1c;
-      flex: 0 0 70px;
-    }
-
+    /* Toast */
     .toast {
       position: fixed;
       top: 1rem;
@@ -552,53 +450,62 @@
 </head>
 <body>
 
-  <!-- Top Header -->
+  <!-- App Header -->
   <header class="app-header">
     <div>
       <div class="brand-title">🌄 Morning Glow Ella</div>
-      <div class="brand-sub">6-Room Mobile Reservation Manager</div>
+      <div class="brand-sub">Daily Room Prep & Food Organizer</div>
     </div>
     <div class="header-actions">
       <button class="icon-btn" onclick="fetchFromGoogleSheet()" title="Sync Google Sheet">🔄</button>
     </div>
   </header>
 
-  <!-- Metrics Bar -->
-  <div class="stats-scroll">
-    <div class="stat-chip">
-      <div class="stat-chip-label">Occupancy</div>
-      <div class="stat-chip-num" id="occupancyNum">0%</div>
+  <!-- Live Date Status -->
+  <div class="date-indicator-bar">
+    <div>
+      <span style="color:var(--text-muted); font-size: 0.75rem;">TODAY: </span>
+      <span id="headerTodayDate">--</span>
     </div>
-    <div class="stat-chip">
-      <div class="stat-chip-label">Today Stays</div>
-      <div class="stat-chip-num" id="todayActiveNum">0</div>
-    </div>
-    <div class="stat-chip">
-      <div class="stat-chip-label">Total Bookings</div>
-      <div class="stat-chip-num" id="totalBookingsNum">0</div>
-    </div>
+    <div class="live-clock" id="liveClockDisplay">Ella Time</div>
   </div>
 
-  <!-- Channel Legend -->
-  <div class="filter-pills">
-    <div class="pill"><span class="pill-dot bg-booking"></span> Booking.com</div>
-    <div class="pill"><span class="pill-dot bg-airbnb"></span> Airbnb</div>
-    <div class="pill"><span class="pill-dot bg-phone"></span> Phone / FB</div>
-    <div class="pill"><span class="pill-dot bg-visiting"></span> Walk-in</div>
-  </div>
-
-  <!-- View Content Areas -->
+  <!-- Main View Container -->
   <div class="view-content">
 
-    <!-- View 1: Agenda (Today, Tomorrow & Upcoming) -->
+    <!-- View 1: Agenda / Room & Food Operations (Default) -->
     <div id="viewAgenda">
-      <div id="agendaContainer"></div>
+      <!-- Today's Section -->
+      <div class="section-head">
+        <div class="section-title" style="color: #0284c7;">
+          <span>☀️ TODAY'S ROOM PREPARATION</span>
+        </div>
+        <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);" id="todayBadgeCount">0 Booked</span>
+      </div>
+      <div id="todayRoomsContainer"></div>
+
+      <!-- Tomorrow's Section -->
+      <div class="section-head" style="margin-top: 1.5rem;">
+        <div class="section-title" style="color: #475569;">
+          <span>🌅 TOMORROW'S PREPARATION & FOOD</span>
+        </div>
+        <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);" id="tomorrowBadgeCount">0 Booked</span>
+      </div>
+      <div id="tomorrowRoomsContainer"></div>
+
+      <!-- Later Bookings -->
+      <div class="section-head" style="margin-top: 1.5rem;">
+        <div class="section-title" style="color: var(--text-muted);">
+          <span>🗓️ FUTURE RESERVATIONS</span>
+        </div>
+      </div>
+      <div id="futureBookingsContainer"></div>
     </div>
 
     <!-- View 2: Timeline Grid -->
     <div id="viewTimeline" style="display: none;">
       <div class="timeline-card">
-        <div class="timeline-nav">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);">
           <span style="font-weight: 800; font-size: 0.95rem;" id="mTimelineMonthTitle">Month</span>
           <div style="display: flex; gap: 0.3rem;">
             <button class="icon-btn" style="width: 32px; height: 32px;" onclick="prevMonth()">◀</button>
@@ -618,33 +525,24 @@
       </div>
     </div>
 
-    <!-- View 3: Room Availability Status -->
-    <div id="viewRooms" style="display: none;">
-      <div id="roomCardsContainer"></div>
-    </div>
-
   </div>
 
-  <!-- Floating Add Button -->
+  <!-- Floating Add Booking Button -->
   <button class="fab" onclick="openAddModal()">＋</button>
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-item active" id="tabAgenda" onclick="switchTab('agenda')">
-      <span class="nav-icon">📋</span>
-      <span>Agenda</span>
+      <span class="nav-icon">🛎️</span>
+      <span>Daily Prep</span>
     </div>
     <div class="nav-item" id="tabTimeline" onclick="switchTab('timeline')">
       <span class="nav-icon">📅</span>
       <span>Timeline</span>
     </div>
-    <div class="nav-item" id="tabRooms" onclick="switchTab('rooms')">
-      <span class="nav-icon">🛏️</span>
-      <span>Rooms</span>
-    </div>
     <div class="nav-item" onclick="fetchFromGoogleSheet()">
       <span class="nav-icon">🔄</span>
-      <span>Sync</span>
+      <span>Sync Sheet</span>
     </div>
   </nav>
 
@@ -661,7 +559,7 @@
         <input type="hidden" id="bookingId" />
 
         <div class="form-group">
-          <label>Room</label>
+          <label>Select Room</label>
           <select id="modalRoom" required>
             <option value="Double Room 1">Double Room 1 (Double)</option>
             <option value="Double Room 2">Double Room 2 (Double)</option>
@@ -713,8 +611,8 @@
         </div>
 
         <div class="form-group">
-          <label>Notes & Requests</label>
-          <textarea id="modalNotes" rows="2" placeholder="e.g. Early arrival, tea at 5 PM"></textarea>
+          <label>🍳 Meals & Special Requests (Breakfast, Dinner, Tea)</label>
+          <textarea id="modalNotes" rows="2" placeholder="e.g. Breakfast for 2 at 8 AM, vegetarian dinner, extra bed"></textarea>
         </div>
 
         <div class="sheet-actions">
@@ -728,7 +626,6 @@
   <div class="toast" id="toastMsg">Syncing...</div>
 
   <script>
-    // Live Google Apps Script Web App Endpoint
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxatfHHIVzEEsi_VJejQ2t9FB58BlxHHgjzI9QjN_zfaDxrQlfBfRv5IRuIh2PMm4VP/exec";
 
     const ROOMS = [
@@ -744,19 +641,29 @@
     let currentDate = new Date();
     let currentTab = 'agenda';
 
-    // Instant offline cache load
+    // Helper: Local date string in YYYY-MM-DD
+    function getLocalDateString(d) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // Load cached bookings
     const cached = localStorage.getItem("morning_glow_bookings");
     if (cached) {
       try { bookings = JSON.parse(cached); } catch(e) { bookings = []; }
     }
 
     window.addEventListener("DOMContentLoaded", () => {
+      const today = new Date();
+      document.getElementById("headerTodayDate").innerText = getLocalDateString(today);
       renderCurrentView();
       fetchFromGoogleSheet();
     });
 
     // ==========================================
-    // SYNC WITH GOOGLE APPS SCRIPT
+    // SYNC WITH GOOGLE SHEETS
     // ==========================================
     async function fetchFromGoogleSheet() {
       showToast("Syncing with Google Sheet...");
@@ -769,8 +676,8 @@
             guestName: item.guestName || "Guest",
             phone: item.phone || "",
             roomId: item.roomId || "Double Room 1",
-            checkIn: formatDateISO(item.checkIn),
-            checkOut: formatDateISO(item.checkOut),
+            checkIn: cleanDateString(item.checkIn),
+            checkOut: cleanDateString(item.checkOut),
             method: item.method || "By Visiting",
             status: item.status || "confirmed",
             notes: item.notes || ""
@@ -780,7 +687,9 @@
           showToast("Sheet Synced! ✓");
         }
       } catch (err) {
-        showToast("Offline mode (Cached data)");
+        console.warn(err);
+        showToast("Offline mode (Using device memory)");
+        renderCurrentView();
       }
     }
 
@@ -800,22 +709,24 @@
       }
     }
 
-    function formatDateISO(val) {
+    function cleanDateString(val) {
       if (!val) return "";
+      if (typeof val === 'string' && val.length >= 10 && val.includes('-')) {
+        return val.slice(0, 10);
+      }
       const d = new Date(val);
       if (isNaN(d.getTime())) return String(val).slice(0, 10);
-      return d.toISOString().slice(0, 10);
+      return getLocalDateString(d);
     }
 
     // ==========================================
-    // TAB SWITCHING
+    // NAVIGATION
     // ==========================================
     function switchTab(tab) {
       currentTab = tab;
       document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
       document.getElementById("viewAgenda").style.display = "none";
       document.getElementById("viewTimeline").style.display = "none";
-      document.getElementById("viewRooms").style.display = "none";
 
       if (tab === 'agenda') {
         document.getElementById("tabAgenda").classList.add("active");
@@ -823,142 +734,177 @@
       } else if (tab === 'timeline') {
         document.getElementById("tabTimeline").classList.add("active");
         document.getElementById("viewTimeline").style.display = "block";
-      } else if (tab === 'rooms') {
-        document.getElementById("tabRooms").classList.add("active");
-        document.getElementById("viewRooms").style.display = "block";
       }
       renderCurrentView();
     }
 
     function renderCurrentView() {
-      updateMetrics();
-      if (currentTab === 'agenda') renderAgenda();
+      if (currentTab === 'agenda') renderDailyOperations();
       else if (currentTab === 'timeline') renderTimeline();
-      else if (currentTab === 'rooms') renderRoomsOverview();
     }
 
     // ==========================================
-    // AGENDA VIEW (Today, Tomorrow & Upcoming)
+    // DAILY OPERATIONS (TODAY & TOMORROW ROOM PREP)
     // ==========================================
-    function renderAgenda() {
-      const container = document.getElementById("agendaContainer");
-      if (bookings.length === 0) {
-        container.innerHTML = `
-          <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📭</div>
-            <div style="font-weight: 700;">No Bookings Yet</div>
-            <p style="font-size: 0.82rem; margin-top: 0.2rem;">Tap the ＋ button below to create your first reservation.</p>
-          </div>
-        `;
-        return;
-      }
+    function renderDailyOperations() {
+      const today = new Date();
+      const todayStr = getLocalDateString(today);
 
-      const now = new Date();
-      const todayStr = now.toISOString().slice(0, 10);
-      
       const tmrw = new Date();
       tmrw.setDate(tmrw.getDate() + 1);
-      const tmrwStr = tmrw.toISOString().slice(0, 10);
+      const tmrwStr = getLocalDateString(tmrw);
 
-      // Filter reservations
-      const todayBookings = bookings.filter(b => (todayStr >= b.checkIn && todayStr <= b.checkOut));
-      const tomorrowBookings = bookings.filter(b => (tmrwStr >= b.checkIn && tmrwStr <= b.checkOut));
-      const upcomingBookings = bookings
-        .filter(b => b.checkIn > tmrwStr)
-        .sort((a, b) => new Date(a.checkIn) - new Date(b.checkIn));
+      let todayBookedCount = 0;
+      let tomorrowBookedCount = 0;
 
-      function createCardHtml(b, targetDateStr) {
-        const methodClass = getMethodClass(b.method);
-        const nights = Math.max(1, Math.round((new Date(b.checkOut) - new Date(b.checkIn)) / (1000 * 60 * 60 * 24)));
-        const phoneClean = (b.phone || "").replace(/[^0-9+]/g, '');
+      // 1. Build Today's Cards for all 6 rooms
+      const todayContainer = document.getElementById("todayRoomsContainer");
+      let todayHtml = "";
 
-        let statusBadge = '';
-        if (targetDateStr === todayStr) {
-          if (b.checkIn === todayStr) {
-            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#dcfce7; color:#15803d; padding:2px 7px; border-radius:4px;">📥 Check-In Today</span>`;
-          } else if (b.checkOut === todayStr) {
-            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#fee2e2; color:#b91c1c; padding:2px 7px; border-radius:4px;">📤 Check-Out Today</span>`;
-          } else {
-            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#e0f2fe; color:#0369a1; padding:2px 7px; border-radius:4px;">🏠 Staying Today</span>`;
+      ROOMS.forEach(room => {
+        const active = bookings.find(b => b.roomId === room.name && (todayStr >= b.checkIn && todayStr <= b.checkOut));
+
+        if (active) {
+          todayBookedCount++;
+          let statusType = "staying";
+          let statusText = "🏠 Staying Today";
+          let prepNote = "Ensure daily housekeeping & room care.";
+
+          if (active.checkIn === todayStr) {
+            statusType = "checkin";
+            statusText = "📥 Arriving Today (Check-In)";
+            prepNote = "Clean & sanitize room, prepare fresh towels and welcome drinks.";
+          } else if (active.checkOut === todayStr) {
+            statusType = "checkout";
+            statusText = "📤 Departing Today (Check-Out)";
+            prepNote = "Prepare bill & arrange room cleaning after guest leaves.";
           }
-        } else if (targetDateStr === tmrwStr) {
-          if (b.checkIn === tmrwStr) {
-            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#dcfce7; color:#15803d; padding:2px 7px; border-radius:4px;">📥 Arriving Tomorrow</span>`;
-          } else if (b.checkOut === tmrwStr) {
-            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#fee2e2; color:#b91c1c; padding:2px 7px; border-radius:4px;">📤 Departing Tomorrow</span>`;
-          }
+
+          todayHtml += createRoomCardHtml(room, active, statusType, statusText, prepNote, todayStr);
+        } else {
+          todayHtml += `
+            <div class="room-prep-card border-vacant" onclick="openAddModalForRoomDate('${room.name}', '${todayStr}')">
+              <div class="room-head">
+                <span class="room-name-title">${room.name}</span>
+                <span class="status-badge badge-vacant">Vacant</span>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">${room.type} &bull; Ready for walk-in or new booking</div>
+            </div>
+          `;
         }
+      });
+      todayContainer.innerHTML = todayHtml;
+      document.getElementById("todayBadgeCount").innerText = `${todayBookedCount} of 6 Rooms Active`;
 
-        return `
-          <div class="booking-card" onclick="openEditModal('${b.id}')">
-            <div class="booking-card-strip ${methodClass}"></div>
-            <div class="booking-top">
-              <div>
-                <div class="guest-name">${escapeHtml(b.guestName)}</div>
-                <div style="margin-top: 3px;">${statusBadge}</div>
+      // 2. Build Tomorrow's Cards for all 6 rooms
+      const tmrwContainer = document.getElementById("tomorrowRoomsContainer");
+      let tmrwHtml = "";
+
+      ROOMS.forEach(room => {
+        const active = bookings.find(b => b.roomId === room.name && (tmrwStr >= b.checkIn && tmrwStr <= b.checkOut));
+
+        if (active) {
+          tomorrowBookedCount++;
+          let statusType = "staying";
+          let statusText = "🏠 Staying Tomorrow";
+          let prepNote = "Plan breakfast / dinner groceries in advance.";
+
+          if (active.checkIn === tmrwStr) {
+            statusType = "checkin";
+            statusText = "📥 Arriving Tomorrow";
+            prepNote = "Ensure room linen, amenities, and arrival timing are ready.";
+          } else if (active.checkOut === tmrwStr) {
+            statusType = "checkout";
+            statusText = "📤 Departing Tomorrow";
+            prepNote = "Verify morning breakfast schedule before check-out.";
+          }
+
+          tmrwHtml += createRoomCardHtml(room, active, statusType, statusText, prepNote, tmrwStr);
+        } else {
+          tmrwHtml += `
+            <div class="room-prep-card border-vacant" onclick="openAddModalForRoomDate('${room.name}', '${tmrwStr}')">
+              <div class="room-head">
+                <span class="room-name-title">${room.name}</span>
+                <span class="status-badge badge-vacant">Vacant Tomorrow</span>
               </div>
-              <span class="room-badge">${escapeHtml(b.roomId)}</span>
+              <div style="font-size:0.78rem; color:var(--text-muted);">${room.type} &bull; Tap to reserve for tomorrow</div>
             </div>
-            <div class="booking-dates">
-              <span>📅 ${b.checkIn} → ${b.checkOut}</span>
-              <span style="font-weight:700;">(${nights} ${nights > 1 ? 'nights' : 'night'})</span>
-            </div>
-            ${b.notes ? `<div style="font-size: 0.75rem; color:#475569; margin-bottom: 0.4rem;">💬 ${escapeHtml(b.notes)}</div>` : ''}
-            <div class="booking-foot">
-              <span class="channel-tag">
-                <span class="pill-dot ${methodClass}"></span>
-                ${escapeHtml(b.method)}
-              </span>
-              <div class="quick-actions" onclick="event.stopPropagation()">
-                ${phoneClean ? `
-                  <a href="tel:${phoneClean}" class="action-chip">📞 Call</a>
-                  <a href="https://wa.me/${phoneClean.replace('+','')}" target="_blank" class="action-chip" style="color:#059669;">💬 WhatsApp</a>
-                ` : ''}
+          `;
+        }
+      });
+      tmrwContainer.innerHTML = tmrwHtml;
+      document.getElementById("tomorrowBadgeCount").innerText = `${tomorrowBookedCount} of 6 Rooms Active`;
+
+      // 3. Future Bookings
+      const futureContainer = document.getElementById("futureBookingsContainer");
+      const futureBookings = bookings
+        .filter(b => b.checkIn > tmrwStr)
+        .sort((a,b) => a.checkIn.localeCompare(b.checkIn));
+
+      if (futureBookings.length === 0) {
+        futureContainer.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted); padding:0.5rem 0;">No further advance bookings logged.</div>`;
+      } else {
+        let fHtml = "";
+        futureBookings.forEach(b => {
+          fHtml += `
+            <div class="room-prep-card" style="border-left:4px solid #94a3b8;" onclick="openEditModal('${b.id}')">
+              <div class="room-head">
+                <span class="room-name-title">${escapeHtml(b.roomId)} &bull; ${escapeHtml(b.guestName)}</span>
+                <span style="font-size:0.75rem; font-weight:700; color:var(--primary);">${b.checkIn}</span>
               </div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">
+                Stay: ${b.checkIn} → ${b.checkOut} (${escapeHtml(b.method)})
+              </div>
+              ${b.notes ? `<div class="food-box">📝 ${escapeHtml(b.notes)}</div>` : ''}
             </div>
-          </div>
-        `;
+          `;
+        });
+        futureContainer.innerHTML = fHtml;
       }
+    }
 
-      let html = '';
+    function createRoomCardHtml(room, b, statusType, statusText, prepNote, dateStr) {
+      const phoneClean = (b.phone || "").replace(/[^0-9+]/g, '');
+      const methodDot = getMethodDotClass(b.method);
 
-      // Today
-      html += `
-        <div class="agenda-day-group">
-          <div class="agenda-date-header" style="color: #0284c7;">
-            <span>☀️ TODAY (${todayStr})</span>
+      return `
+        <div class="room-prep-card border-${statusType}" onclick="openEditModal('${b.id}')">
+          <div class="room-head">
+            <span class="room-name-title">${room.name}</span>
+            <span class="status-badge badge-${statusType}">${statusText}</span>
           </div>
-          ${todayBookings.length > 0 
-            ? todayBookings.map(b => createCardHtml(b, todayStr)).join('') 
-            : `<div style="font-size:0.8rem; color:var(--text-muted); background:#fff; padding:0.8rem; border-radius:0.75rem; border:1px dashed var(--border); margin-bottom:0.75rem;">No check-ins, departures, or active stays for today.</div>`}
+
+          <div class="guest-line">
+            👤 <strong>${escapeHtml(b.guestName)}</strong> 
+            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">(${b.checkIn} → ${b.checkOut})</span>
+          </div>
+
+          <!-- Food / Notes Highlight -->
+          <div class="food-box">
+            🍳 <strong>Food & Prep:</strong> 
+            <span>${b.notes ? escapeHtml(b.notes) : prepNote}</span>
+          </div>
+
+          <div class="card-actions-bar" onclick="event.stopPropagation()">
+            <span><span class="ch-dot ${methodDot}"></span>${escapeHtml(b.method)}</span>
+            <div style="display:flex; gap:0.4rem;">
+              ${phoneClean ? `
+                <a href="tel:${phoneClean}" class="btn-action-small">📞 Call</a>
+                <a href="https://wa.me/${phoneClean.replace('+','')}" target="_blank" class="btn-action-small" style="color:#059669;">💬 WhatsApp</a>
+              ` : ''}
+            </div>
+          </div>
         </div>
       `;
+    }
 
-      // Tomorrow
-      html += `
-        <div class="agenda-day-group">
-          <div class="agenda-date-header" style="color: #475569;">
-            <span>🌅 TOMORROW (${tmrwStr})</span>
-          </div>
-          ${tomorrowBookings.length > 0 
-            ? tomorrowBookings.map(b => createCardHtml(b, tmrwStr)).join('') 
-            : `<div style="font-size:0.8rem; color:var(--text-muted); background:#fff; padding:0.8rem; border-radius:0.75rem; border:1px dashed var(--border); margin-bottom:0.75rem;">No bookings scheduled for tomorrow.</div>`}
-        </div>
-      `;
-
-      // Upcoming
-      if (upcomingBookings.length > 0) {
-        html += `
-          <div class="agenda-day-group" style="margin-top: 1rem;">
-            <div class="agenda-date-header" style="color: var(--text-muted);">
-              <span>🗓️ LATER UPCOMING</span>
-            </div>
-            ${upcomingBookings.map(b => createCardHtml(b, '')).join('')}
-          </div>
-        `;
-      }
-
-      container.innerHTML = html;
+    function getMethodDotClass(method) {
+      if (!method) return "bg-visiting";
+      const m = method.toLowerCase();
+      if (m.includes("book")) return "bg-booking";
+      if (m.includes("air")) return "bg-airbnb";
+      if (m.includes("phone") || m.includes("face")) return "bg-phone";
+      return "bg-visiting";
     }
 
     // ==========================================
@@ -1005,9 +951,9 @@
             td.colSpan = colSpan;
             skip = colSpan - 1;
 
-            const methodClass = getMethodClass(b.method);
+            const methodDot = getMethodDotClass(b.method);
             td.innerHTML = `
-              <div class="timeline-bar ${methodClass}" onclick="openEditModal('${b.id}')">
+              <div class="timeline-bar ${methodDot}" onclick="openEditModal('${b.id}')">
                 <span>${escapeHtml(b.guestName)}</span>
               </div>
             `;
@@ -1021,59 +967,6 @@
     }
 
     // ==========================================
-    // ROOMS STATUS VIEW
-    // ==========================================
-    function renderRoomsOverview() {
-      const container = document.getElementById("roomCardsContainer");
-      const todayStr = new Date().toISOString().slice(0, 10);
-
-      let html = '';
-      ROOMS.forEach(r => {
-        const activeBooking = bookings.find(b => b.roomId === r.name && todayStr >= b.checkIn && todayStr < b.checkOut);
-        const isOccupied = Boolean(activeBooking);
-
-        html += `
-          <div class="booking-card" style="border-left: 4px solid ${isOccupied ? '#e11d48' : '#059669'};" onclick="${isOccupied ? `openEditModal('${activeBooking.id}')` : `openAddModalForRoomDate('${r.name}', '${todayStr}')`}">
-            <div class="booking-top">
-              <div class="guest-name">${r.name}</div>
-              <span style="font-size:0.75rem; font-weight:700; color:${isOccupied ? '#e11d48' : '#059669'};">
-                ${isOccupied ? '🔴 Occupied' : '🟢 Available Today'}
-              </span>
-            </div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${r.type}</div>
-            ${isOccupied ? `
-              <div style="margin-top: 0.5rem; font-size: 0.8rem; background: #f8fafc; padding: 0.4rem 0.6rem; border-radius: 0.4rem;">
-                <strong>Guest:</strong> ${escapeHtml(activeBooking.guestName)} (${activeBooking.method})<br>
-                <strong>Stay:</strong> ${activeBooking.checkIn} → ${activeBooking.checkOut}
-              </div>
-            ` : `
-              <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--primary); font-weight:600;">+ Tap to book this room today</div>
-            `}
-          </div>
-        `;
-      });
-
-      container.innerHTML = html;
-    }
-
-    function getMethodClass(method) {
-      if (!method) return "bg-visiting";
-      const m = method.toLowerCase();
-      if (m.includes("book")) return "bg-booking";
-      if (m.includes("air")) return "bg-airbnb";
-      if (m.includes("phone") || m.includes("face")) return "bg-phone";
-      return "bg-visiting";
-    }
-
-    function updateMetrics() {
-      document.getElementById("totalBookingsNum").innerText = bookings.length;
-      const todayStr = new Date().toISOString().slice(0, 10);
-      const active = bookings.filter(b => todayStr >= b.checkIn && todayStr < b.checkOut);
-      document.getElementById("todayActiveNum").innerText = active.length;
-      document.getElementById("occupancyNum").innerText = `${Math.round((active.length / 6) * 100)}%`;
-    }
-
-    // ==========================================
     // MODAL ACTIONS
     // ==========================================
     function openAddModal() {
@@ -1082,12 +975,12 @@
       document.getElementById("bookingForm").reset();
       document.getElementById("deleteBtn").style.display = "none";
 
-      const todayStr = new Date().toISOString().slice(0, 10);
+      const today = new Date();
       const tmrw = new Date();
       tmrw.setDate(tmrw.getDate() + 1);
-      document.getElementById("modalCheckIn").value = todayStr;
-      document.getElementById("modalCheckOut").value = tmrw.toISOString().slice(0, 10);
 
+      document.getElementById("modalCheckIn").value = getLocalDateString(today);
+      document.getElementById("modalCheckOut").value = getLocalDateString(tmrw);
       document.getElementById("bookingModal").style.display = "flex";
     }
 
@@ -1095,9 +988,9 @@
       openAddModal();
       document.getElementById("modalRoom").value = roomName;
       document.getElementById("modalCheckIn").value = dateStr;
-      const tmrw = new Date(dateStr);
-      tmrw.setDate(tmrw.getDate() + 1);
-      document.getElementById("modalCheckOut").value = tmrw.toISOString().slice(0, 10);
+      const nextDay = new Date(dateStr);
+      nextDay.setDate(nextDay.getDate() + 1);
+      document.getElementById("modalCheckOut").value = getLocalDateString(nextDay);
     }
 
     function openEditModal(id) {
@@ -1140,11 +1033,11 @@
       const notes = document.getElementById("modalNotes").value.trim();
 
       if (checkOut <= checkIn) {
-        alert("Check-Out must be after Check-In.");
+        alert("Check-Out date must be after Check-In date.");
         return;
       }
 
-      // Conflict detection
+      // Check overlap conflicts
       const conflict = bookings.find(b => {
         if (String(b.id) === String(id)) return false;
         if (b.roomId !== roomId) return false;
@@ -1178,7 +1071,7 @@
       localStorage.setItem("morning_glow_bookings", JSON.stringify(bookings));
       closeModal();
       renderCurrentView();
-      showToast("Saved & Syncing... ✓");
+      showToast("Saved & Synced! ✓");
       pushToGoogleSheet();
     }
 

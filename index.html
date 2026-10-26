@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Morning Glow Ella</title>
+  <title>Morning Glow Ella - Reservation Manager</title>
   
+  <!-- Mobile PWA Meta Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Morning Glow" />
@@ -22,6 +23,7 @@
       --primary-dark: #0369a1;
       --primary-light: #e0f2fe;
 
+      /* Channel Colors */
       --ch-booking: #1d4ed8;
       --ch-airbnb: #e11d48;
       --ch-phone: #0891b2;
@@ -46,6 +48,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Top Navigation Bar */
     .app-header {
       position: sticky;
       top: 0;
@@ -98,6 +101,7 @@
       background: #f1f5f9;
     }
 
+    /* Top Stats Metrics */
     .stats-scroll {
       display: flex;
       gap: 0.75rem;
@@ -132,6 +136,7 @@
       margin-top: 0.15rem;
     }
 
+    /* Channel Badges */
     .filter-pills {
       display: flex;
       gap: 0.4rem;
@@ -164,12 +169,28 @@
       padding: 0 1rem;
     }
 
+    /* Agenda Day Sections */
+    .agenda-day-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .agenda-date-header {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Booking Item Cards */
     .booking-card {
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 0.85rem;
       padding: 0.9rem 1rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.65rem;
       box-shadow: 0 1px 3px rgba(0,0,0,0.03);
       position: relative;
       overflow: hidden;
@@ -225,8 +246,8 @@
       align-items: center;
       font-size: 0.75rem;
       border-top: 1px dashed var(--border);
-      padding-top: 0.4rem;
-      margin-top: 0.4rem;
+      padding-top: 0.45rem;
+      margin-top: 0.45rem;
     }
 
     .channel-tag {
@@ -244,7 +265,7 @@
     .action-chip {
       background: #f8fafc;
       border: 1px solid var(--border);
-      padding: 0.2rem 0.5rem;
+      padding: 0.25rem 0.55rem;
       border-radius: 0.35rem;
       font-size: 0.72rem;
       font-weight: 600;
@@ -255,6 +276,7 @@
       gap: 0.2rem;
     }
 
+    /* Timeline Grid */
     .timeline-card {
       background: #fff;
       border-radius: 1rem;
@@ -333,6 +355,7 @@
     .bg-phone { background-color: var(--ch-phone); color: #fff; }
     .bg-visiting { background-color: var(--ch-visiting); color: #fff; }
 
+    /* Bottom Navigation */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -370,6 +393,7 @@
       font-size: 1.25rem;
     }
 
+    /* Floating Action Button */
     .fab {
       position: fixed;
       bottom: calc(75px + var(--safe-bottom));
@@ -394,6 +418,7 @@
       transform: scale(0.92);
     }
 
+    /* Bottom Sheet Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -527,6 +552,7 @@
 </head>
 <body>
 
+  <!-- Top Header -->
   <header class="app-header">
     <div>
       <div class="brand-title">🌄 Morning Glow Ella</div>
@@ -537,6 +563,7 @@
     </div>
   </header>
 
+  <!-- Metrics Bar -->
   <div class="stats-scroll">
     <div class="stat-chip">
       <div class="stat-chip-label">Occupancy</div>
@@ -552,6 +579,7 @@
     </div>
   </div>
 
+  <!-- Channel Legend -->
   <div class="filter-pills">
     <div class="pill"><span class="pill-dot bg-booking"></span> Booking.com</div>
     <div class="pill"><span class="pill-dot bg-airbnb"></span> Airbnb</div>
@@ -559,12 +587,15 @@
     <div class="pill"><span class="pill-dot bg-visiting"></span> Walk-in</div>
   </div>
 
+  <!-- View Content Areas -->
   <div class="view-content">
 
+    <!-- View 1: Agenda (Today, Tomorrow & Upcoming) -->
     <div id="viewAgenda">
       <div id="agendaContainer"></div>
     </div>
 
+    <!-- View 2: Timeline Grid -->
     <div id="viewTimeline" style="display: none;">
       <div class="timeline-card">
         <div class="timeline-nav">
@@ -587,14 +618,17 @@
       </div>
     </div>
 
+    <!-- View 3: Room Availability Status -->
     <div id="viewRooms" style="display: none;">
       <div id="roomCardsContainer"></div>
     </div>
 
   </div>
 
+  <!-- Floating Add Button -->
   <button class="fab" onclick="openAddModal()">＋</button>
 
+  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-item active" id="tabAgenda" onclick="switchTab('agenda')">
       <span class="nav-icon">📋</span>
@@ -614,6 +648,7 @@
     </div>
   </nav>
 
+  <!-- Bottom Sheet Form Modal -->
   <div class="modal-overlay" id="bookingModal" onclick="handleOverlayClick(event)">
     <div class="sheet-modal" onclick="event.stopPropagation()">
       <div class="sheet-handle"></div>
@@ -693,6 +728,7 @@
   <div class="toast" id="toastMsg">Syncing...</div>
 
   <script>
+    // Live Google Apps Script Web App Endpoint
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxatfHHIVzEEsi_VJejQ2t9FB58BlxHHgjzI9QjN_zfaDxrQlfBfRv5IRuIh2PMm4VP/exec";
 
     const ROOMS = [
@@ -708,6 +744,7 @@
     let currentDate = new Date();
     let currentTab = 'agenda';
 
+    // Instant offline cache load
     const cached = localStorage.getItem("morning_glow_bookings");
     if (cached) {
       try { bookings = JSON.parse(cached); } catch(e) { bookings = []; }
@@ -718,6 +755,9 @@
       fetchFromGoogleSheet();
     });
 
+    // ==========================================
+    // SYNC WITH GOOGLE APPS SCRIPT
+    // ==========================================
     async function fetchFromGoogleSheet() {
       showToast("Syncing with Google Sheet...");
       try {
@@ -767,6 +807,9 @@
       return d.toISOString().slice(0, 10);
     }
 
+    // ==========================================
+    // TAB SWITCHING
+    // ==========================================
     function switchTab(tab) {
       currentTab = tab;
       document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
@@ -794,6 +837,9 @@
       else if (currentTab === 'rooms') renderRoomsOverview();
     }
 
+    // ==========================================
+    // AGENDA VIEW (Today, Tomorrow & Upcoming)
+    // ==========================================
     function renderAgenda() {
       const container = document.getElementById("agendaContainer");
       if (bookings.length === 0) {
@@ -807,19 +853,50 @@
         return;
       }
 
-      const sorted = [...bookings].sort((a,b) => new Date(a.checkIn) - new Date(b.checkIn));
+      const now = new Date();
+      const todayStr = now.toISOString().slice(0, 10);
+      
+      const tmrw = new Date();
+      tmrw.setDate(tmrw.getDate() + 1);
+      const tmrwStr = tmrw.toISOString().slice(0, 10);
 
-      let html = '';
-      sorted.forEach(b => {
+      // Filter reservations
+      const todayBookings = bookings.filter(b => (todayStr >= b.checkIn && todayStr <= b.checkOut));
+      const tomorrowBookings = bookings.filter(b => (tmrwStr >= b.checkIn && tmrwStr <= b.checkOut));
+      const upcomingBookings = bookings
+        .filter(b => b.checkIn > tmrwStr)
+        .sort((a, b) => new Date(a.checkIn) - new Date(b.checkIn));
+
+      function createCardHtml(b, targetDateStr) {
         const methodClass = getMethodClass(b.method);
         const nights = Math.max(1, Math.round((new Date(b.checkOut) - new Date(b.checkIn)) / (1000 * 60 * 60 * 24)));
         const phoneClean = (b.phone || "").replace(/[^0-9+]/g, '');
 
-        html += `
+        let statusBadge = '';
+        if (targetDateStr === todayStr) {
+          if (b.checkIn === todayStr) {
+            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#dcfce7; color:#15803d; padding:2px 7px; border-radius:4px;">📥 Check-In Today</span>`;
+          } else if (b.checkOut === todayStr) {
+            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#fee2e2; color:#b91c1c; padding:2px 7px; border-radius:4px;">📤 Check-Out Today</span>`;
+          } else {
+            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#e0f2fe; color:#0369a1; padding:2px 7px; border-radius:4px;">🏠 Staying Today</span>`;
+          }
+        } else if (targetDateStr === tmrwStr) {
+          if (b.checkIn === tmrwStr) {
+            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#dcfce7; color:#15803d; padding:2px 7px; border-radius:4px;">📥 Arriving Tomorrow</span>`;
+          } else if (b.checkOut === tmrwStr) {
+            statusBadge = `<span style="font-size:0.7rem; font-weight:700; background:#fee2e2; color:#b91c1c; padding:2px 7px; border-radius:4px;">📤 Departing Tomorrow</span>`;
+          }
+        }
+
+        return `
           <div class="booking-card" onclick="openEditModal('${b.id}')">
             <div class="booking-card-strip ${methodClass}"></div>
             <div class="booking-top">
-              <div class="guest-name">${escapeHtml(b.guestName)}</div>
+              <div>
+                <div class="guest-name">${escapeHtml(b.guestName)}</div>
+                <div style="margin-top: 3px;">${statusBadge}</div>
+              </div>
               <span class="room-badge">${escapeHtml(b.roomId)}</span>
             </div>
             <div class="booking-dates">
@@ -841,11 +918,52 @@
             </div>
           </div>
         `;
-      });
+      }
+
+      let html = '';
+
+      // Today
+      html += `
+        <div class="agenda-day-group">
+          <div class="agenda-date-header" style="color: #0284c7;">
+            <span>☀️ TODAY (${todayStr})</span>
+          </div>
+          ${todayBookings.length > 0 
+            ? todayBookings.map(b => createCardHtml(b, todayStr)).join('') 
+            : `<div style="font-size:0.8rem; color:var(--text-muted); background:#fff; padding:0.8rem; border-radius:0.75rem; border:1px dashed var(--border); margin-bottom:0.75rem;">No check-ins, departures, or active stays for today.</div>`}
+        </div>
+      `;
+
+      // Tomorrow
+      html += `
+        <div class="agenda-day-group">
+          <div class="agenda-date-header" style="color: #475569;">
+            <span>🌅 TOMORROW (${tmrwStr})</span>
+          </div>
+          ${tomorrowBookings.length > 0 
+            ? tomorrowBookings.map(b => createCardHtml(b, tmrwStr)).join('') 
+            : `<div style="font-size:0.8rem; color:var(--text-muted); background:#fff; padding:0.8rem; border-radius:0.75rem; border:1px dashed var(--border); margin-bottom:0.75rem;">No bookings scheduled for tomorrow.</div>`}
+        </div>
+      `;
+
+      // Upcoming
+      if (upcomingBookings.length > 0) {
+        html += `
+          <div class="agenda-day-group" style="margin-top: 1rem;">
+            <div class="agenda-date-header" style="color: var(--text-muted);">
+              <span>🗓️ LATER UPCOMING</span>
+            </div>
+            ${upcomingBookings.map(b => createCardHtml(b, '')).join('')}
+          </div>
+        `;
+      }
 
       container.innerHTML = html;
     }
 
+    // ==========================================
+    // TIMELINE VIEW
+    // ==========================================
     function renderTimeline() {
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
@@ -902,6 +1020,9 @@
       });
     }
 
+    // ==========================================
+    // ROOMS STATUS VIEW
+    // ==========================================
     function renderRoomsOverview() {
       const container = document.getElementById("roomCardsContainer");
       const todayStr = new Date().toISOString().slice(0, 10);
@@ -952,6 +1073,9 @@
       document.getElementById("occupancyNum").innerText = `${Math.round((active.length / 6) * 100)}%`;
     }
 
+    // ==========================================
+    // MODAL ACTIONS
+    // ==========================================
     function openAddModal() {
       document.getElementById("modalTitle").innerText = "New Reservation";
       document.getElementById("bookingId").value = "";
@@ -1020,6 +1144,7 @@
         return;
       }
 
+      // Conflict detection
       const conflict = bookings.find(b => {
         if (String(b.id) === String(id)) return false;
         if (b.roomId !== roomId) return false;

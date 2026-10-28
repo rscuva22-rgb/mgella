@@ -531,6 +531,8 @@
     .btn-copy { background:#eee3d3; color:var(--primary-dark); }
     .message-note { margin-top:0.75rem; color:var(--text-muted); font-size:0.72rem; line-height:1.45; }
     .contact-missing { color:#8d4f4e; font-size:0.78rem; background:#f3dfdc; border-radius:0.5rem; padding:0.65rem; }
+    .developer-credit { max-width:1280px; margin:0 auto; padding:0.4rem 1rem 5.5rem; text-align:center; color:var(--text-muted); font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; }
+    .developer-credit strong { color:var(--primary-dark); font-weight:800; }
     @media (max-width: 799px) { .welcome-panel { padding: 0 1rem; } .welcome-panel-inner { padding: 0.9rem 1rem; } .welcome-mark { font-size:2rem; } }
   </style>
 </head>
@@ -651,6 +653,8 @@
   <!-- Floating Add Booking Button -->
   <button class="fab" onclick="openAddModal()">＋</button>
 
+  <div class="developer-credit">Developed by <strong>Shan Ranasinghe</strong></div>
+
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-item active" id="tabAgenda" onclick="switchTab('agenda')">
@@ -719,17 +723,6 @@
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Arrival Time</label>
-            <input type="time" id="modalArrivalTime" />
-          </div>
-          <div class="form-group">
-            <label>Guest Preference</label>
-            <input type="text" id="modalPreference" placeholder="e.g. quiet room, scenic view" />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
             <label>Check-In Date</label>
             <input type="date" id="modalCheckIn" required />
           </div>
@@ -763,8 +756,13 @@
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Nightly Rate (LKR)</label>
-            <input type="number" id="modalRate" min="0" step="500" placeholder="e.g. 25000" />
+            <label>Meal Plan</label>
+            <select id="modalMealPlan" required>
+              <option value="Room Only">Room Only</option>
+              <option value="BB">BB · Bed & Breakfast</option>
+              <option value="Half Board">Half Board</option>
+              <option value="Full Board">Full Board</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Payment</label>
@@ -861,9 +859,7 @@
         status: item.status || "confirmed",
         adults: Number(item.adults || 2),
         children: Number(item.children || 0),
-        arrivalTime: item.arrivalTime || "",
-        preference: item.preference || "",
-        rate: Number(item.rate || 0),
+        mealPlan: item.mealPlan || "Room Only",
         payment: item.payment || "unpaid",
         housekeeping: item.housekeeping || "not-started",
         notes: item.notes || ""
@@ -1159,6 +1155,7 @@
           </div>
           <div class="booking-meta">
             <span>👥 ${Number(b.adults || 2) + Number(b.children || 0)} guest${Number(b.adults || 2) + Number(b.children || 0) === 1 ? '' : 's'}</span>
+            <span>🍽️ ${escapeHtml(b.mealPlan || 'Room Only')}</span>
             <span>💳 ${escapeHtml((b.payment || 'unpaid').replace('-', ' '))}</span>
             <span>🧹 ${escapeHtml((b.housekeeping || 'not-started').replace('-', ' '))}</span>
           </div>
@@ -1290,9 +1287,7 @@
       document.getElementById("modalEmail").value = b.email || "";
       document.getElementById("modalAdults").value = b.adults || 2;
       document.getElementById("modalChildren").value = b.children || 0;
-      document.getElementById("modalArrivalTime").value = b.arrivalTime || "";
-      document.getElementById("modalPreference").value = b.preference || "";
-      document.getElementById("modalRate").value = b.rate || "";
+      document.getElementById("modalMealPlan").value = b.mealPlan || "Room Only";
       document.getElementById("modalPayment").value = b.payment || "unpaid";
       document.getElementById("modalHousekeeping").value = b.housekeeping || "not-started";
       document.getElementById("modalCheckIn").value = b.checkIn;
@@ -1322,9 +1317,7 @@
       const email = document.getElementById("modalEmail").value.trim();
       const adults = Math.max(1, Number(document.getElementById("modalAdults").value || 1));
       const children = Math.max(0, Number(document.getElementById("modalChildren").value || 0));
-      const arrivalTime = document.getElementById("modalArrivalTime").value;
-      const preference = document.getElementById("modalPreference").value.trim();
-      const rate = Math.max(0, Number(document.getElementById("modalRate").value || 0));
+      const mealPlan = document.getElementById("modalMealPlan").value;
       const payment = document.getElementById("modalPayment").value;
       const housekeeping = document.getElementById("modalHousekeeping").value;
       const checkIn = document.getElementById("modalCheckIn").value;
@@ -1356,7 +1349,7 @@
       if (id) {
         const idx = bookings.findIndex(x => String(x.id) === String(id));
         if (idx !== -1) {
-          bookings[idx] = { id, roomId, guestName, phone, email, adults, children, arrivalTime, preference, rate, payment, housekeeping, checkIn, checkOut, method, status, notes };
+          bookings[idx] = { id, roomId, guestName, phone, email, adults, children, mealPlan, payment, housekeeping, checkIn, checkOut, method, status, notes };
         }
       } else {
         bookings.push({
@@ -1367,9 +1360,7 @@
           email,
           adults,
           children,
-          arrivalTime,
-          preference,
-          rate,
+          mealPlan,
           payment,
           housekeeping,
           checkIn,
@@ -1400,13 +1391,11 @@
     function buildGuestMessage(b, statusOverride) {
       const status = statusOverride || b.status;
       const name = b.guestName || 'Guest';
-      const arrival = b.arrivalTime ? ` around ${b.arrivalTime}` : '';
       const note = b.notes ? `\n\nNotes for your stay: ${b.notes}` : '';
-      const preference = b.preference ? `\n\nGuest preference: ${b.preference}` : '';
       if (status === 'cancelled') {
         return `Dear ${name},\n\nWe’re writing to confirm that your reservation at Morning Glow Ella has been cancelled. If this was unexpected, please contact us and we’ll be happy to help.\n\nWarm regards,\nMorning Glow Ella\nElla, Sri Lanka`;
       }
-      return `Dear ${name},\n\nThank you for choosing Morning Glow Ella. Your reservation status is now: ${statusLabel(status)}.\n\nRoom: ${b.roomId}\nCheck-in: ${b.checkIn}${arrival}\nCheck-out: ${b.checkOut}\nGuests: ${Number(b.adults || 2) + Number(b.children || 0)}${preference}${note}\n\nWe look forward to welcoming you. Please reply if you need assistance with arrival arrangements or anything during your stay.\n\nWarm regards,\nMorning Glow Ella\nBoutique Stay & Guest Operations`;
+      return `Dear ${name},\n\nThank you for choosing Morning Glow Ella. Your reservation status is now: ${statusLabel(status)}.\n\nRoom: ${b.roomId}\nCheck-in: ${b.checkIn}\nCheck-out: ${b.checkOut}\nGuests: ${Number(b.adults || 2) + Number(b.children || 0)}\nMeal plan: ${b.mealPlan || 'Room Only'}${note}\n\nWe look forward to welcoming you. Please reply if you need assistance with arrival arrangements or anything during your stay.\n\nWarm regards,\nMorning Glow Ella\nBoutique Stay & Guest Operations`;
     }
 
     function openGuestMessageModal(id, statusOverride) {
